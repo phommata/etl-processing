@@ -15,13 +15,13 @@ const OUTPUT_DIR = DATA_DIR + '/output'
 async function process_etl() {
     try {
         // decompress: unzip, gunzip
-        zip_filenames = await read_dir(DATA_DIR)
-        zip_file_paths = await file_paths(DATA_DIR, zip_filenames)
-        gunzip_file_paths = await unzip(zip_file_paths);
+        let zip_filenames = await read_dir(DATA_DIR)
+        let zip_file_paths = file_paths(DATA_DIR, zip_filenames)
+        let gunzip_file_paths = await unzip(zip_file_paths);
 
-        for (gunzip_file_path of gunzip_file_paths) {
+        for await (gunzip_file_path of gunzip_file_paths) {
             gunzip_filenames = await read_dir(gunzip_file_path)
-            gunzip_file_paths = await file_paths(gunzip_file_path, gunzip_filenames)
+            gunzip_file_paths = file_paths(gunzip_file_path, gunzip_filenames)
             json_file_paths = await gunzip(gunzip_file_paths, GUNZIP_DIR);
             await etl(json_file_paths, GZIP_DIR, TRANSFORM_DIR);
         }

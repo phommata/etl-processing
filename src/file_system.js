@@ -20,14 +20,7 @@ module.exports = {
             console.log('read dir done')
         })
     },
-    file_paths: async(dir, filenames) => {
-        file_paths = []
-
-        for await (filename of filenames) {
-            file_path = path.join(dir, filename)
-            file_paths.push(file_path)
-        }
-
-        return file_paths
+    file_paths: (dir, filenames) => {
+        return filenames.map(filename => path.join(dir, filename))
     }
 }
