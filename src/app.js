@@ -23,9 +23,9 @@ async function process_etl() {
             gunzip_filenames = await read_dir(gunzip_file_path)
             gunzip_file_paths = await file_paths(gunzip_file_path, gunzip_filenames)
             json_file_paths = await gunzip(gunzip_file_paths, GUNZIP_DIR);
+            await etl(json_file_paths, GZIP_DIR, TRANSFORM_DIR);
         }
 
-        await etl(json_file_paths, GZIP_DIR, TRANSFORM_DIR);
 
         gzip_file_paths = await read_dir(GZIP_DIR)
 
