@@ -1,0 +1,9 @@
+dist
+data/*.zip*
+data/gzip
+data/gunzip
+data/input
+data/output
+data/output-combine
+data/transform
+node_modules

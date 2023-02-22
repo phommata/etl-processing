@@ -1,0 +1,69 @@
+# ETL Processing Test
+
+## Overview and Expectations
+
+The following test will demonstrate experience with requirements gathering, JavaScript, ETL, data structures, code/repo structure, code readability, naming conventions, and unit testing. 
+
+We value and hope to see:
+
+- An understanding of the goal of the work
+- Clean readable code
+- Unit Testing
+- Readable and well-organized code
+- Efficient algorithms
+
+You should:
+
+- Timebox this effort and spend no more than 2-3 hours on it
+
+## Data Pipeline Project
+
+We want to build an application that will take incoming JSON containing a UNIX timestamp, a URL string, and array of objects, and transform the data into a new format that is easier to understand and parse different parts of the URL to make it easier to query downstream. We want to extract the domain, path name, turn the query string into a name-value pared object (each query string variable becomes a key with the query string parameter value), and the hash, and create a new object in the process.
+
+Write a simple server-side process in Typescript (preferred, and if used, type validation and use are required) or JavaScript to take input JSON files, process and transform them into a different JSON format, then save the new objects to files on a local disk.
+
+### Input:
+
+Multiple JSON files, each individually gzipped, with the following structure:
+
+```json
+{
+  "ts": 1234567890,             // unix timestamp
+	"u": "https://www.test.com/products/productA.html?a=5435&b=test#reviews"  // a url
+  "e": [ {list of events} ]     // an array of objects, each object represents an event
+}
+```
+
+### Transform:
+
+For each event in the array, create an output object which contains the following:
+
+```json
+{
+  "timestamp": ....                // same timestamp as parent
+  "url_object": {                    // parsed URL object
+    "domain": "www.test.com"   // domain
+    "path": "/products/productA.html"         // path
+    "query_object": {                  // query string object e.g. from ?q1=val1&q2=val2
+			"a": "5435",
+			"b": "test",
+			... 
+		}
+    "hash": "#reviews"            // hash
+  }
+  "ec": {original event content}
+}
+```
+
+### Store:
+
+Save the transformed objects in JSON files in a local folder. Each file should store multiple JSON objects but the total size of each file should be limited to 8Kb.
+
+### Input file:
+
+[input.zip](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/12aadc60-a83f-45c6-a6aa-4f6307114a42/input.zip)
+
+## Next Steps:
+
+1. Once completed, create a public repo on GitHub with the code and send a link to it via hiring@datasentinelai.com.
+2. After the code is reviewed to ensure it works as designed, we will schedule a meeting to review the code and discuss additional topics.
